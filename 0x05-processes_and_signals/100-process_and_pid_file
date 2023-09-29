@@ -14,4 +14,3 @@ trap "echo 'Y U no love me?!'" SIGINT
 trap "rm -rf /var/run/holbertonscript.pid; exit" SIGQUIT
 
 while :; do echo 'To infinity and beyond'; sleep 2; done
-
