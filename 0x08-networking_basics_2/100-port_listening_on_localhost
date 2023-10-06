@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script do make the localhost listen on port 98
+# This script makes localhost listen on port 98
 
-nc -1 localhost 98
+nc -l localhost 98
 
