@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Name of the private key
+PRIVATE_KEY="school"
+
+# Number of bits in the key
+BITS=4096
+
+# Passphrase for
+
