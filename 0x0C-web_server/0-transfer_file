@@ -1,26 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# transfer a file from our client to a server
+if [ $# -lt 3 ];
+then
+    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY";
+    exit;
+fi;
 
-if [ $# -lt 4 ]; then
-    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
-    exit 1
-fi
-
-FILE_PATH=$1
-SERVER_IP=$2
-USER_NAME=$3
-SSH_KEY_PATH=$4
-
-# Enable StrictHostKeyChecking and UserKnownHostsFile in scp command
-# Set up ssh config
-SSH_CONFIG_PATH=/tmp/ssh_config
-cat > $SSH_CONFIG_PATH << EOL
-Host *
- StrictHostKeyChecking no
- UserKnownHostsFile /dev/null
-EOL
-
-# Transfer file
-scp -F $SSH_CONFIG_PATH -i $SSH_KEY_PATH $FILE_PATH $USER_NAME@$SERVER_IP:~/
-
-# Clean up
-rm $SSH_CONFIG_PATH
+if [ $# -ge 4 ];
+then
+    scp -o StrictHostKeyChecking=no -i "$4" "$1" "$3"@"$2":~/
+else
+    scp -o StrictHostKeyChecking=no "$1" "$3"@"$2":~/
+fi;
