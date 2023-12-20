@@ -1,25 +1,35 @@
-# File: 2-puppet_custom_http_response_header.pp
+# puppet manifest creating a custom HTTP header response
+exec { 'apt-get-update':
+  command => '/usr/bin/apt-get update',
+}
 
-# Ensure Nginx is installed
 package { 'nginx':
-  ensure => installed,
+  ensure  => installed,
+  require => Exec['apt-get-update'],
 }
 
-# Define the custom HTTP header and its value
-$custom_header_name = 'X-Served-By'
-$custom_header_value = $::hostname
-
-# Configure Nginx with the custom header
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  replace => true,
-  content => template('nginx/default.erb'),
-  notify  => Service['nginx'],
+file_line { 'a':
+  ensure  => 'present',
+  path    => '/etc/nginx/sites-available/default',
+  after   => 'listen 80 default_server;',
+  line    => 'rewrite ^/redirect_me https://www.github.com/Orlando-Gama permanent;',
+  require => Package['nginx'],
 }
 
-# Ensure Nginx service is running and enabled
+file_line { 'b':
+  ensure  => 'present',
+  path    => '/etc/nginx/sites-available/default',
+  after   => 'listen 80 default_server;',
+  line    => 'add_header X-Served-By $hostname;',
+  require => Package['nginx'],
+}
+
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
+  require => Package['nginx'],
+}
+
 service { 'nginx':
   ensure  => running,
-  enable  => true,
-  require => File['/etc/nginx/sites-available/default'],
+  require => Package['nginx'],
 }
