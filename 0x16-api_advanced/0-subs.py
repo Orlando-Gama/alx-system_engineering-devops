@@ -5,16 +5,27 @@ subreddit.
 """
 import requests
 
+def top_ten(subreddit):
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
+    headers = {"User-Agent": "your_user_agent"}  # Reddit API requires a User-Agent header
 
-def number_of_subscribers(subreddit):
-    """
-    Queries the Reddit API and returns the number of total subscribers for a
-    given subreddit.
-    """
-    url = 'http://www.reddit.com/r/{}/about.json'.format(subreddit)
-    headers = {'User-Agent': 'Python/1.0(Holberton School 0x16 task 0)'}
     response = requests.get(url, headers=headers)
-    if (not response.ok):
-        return 0
-    subscriber_count = response.json().get('data').get('subscribers')
-    return subscriber_count
+
+    if response.status_code == 200:
+        data = response.json().get("data", {}).get("children", [])
+
+        if data:
+            for post in data:
+                print(post["data"]["title"])
+        else:
+            print("No posts found in the subreddit.")
+    else:
+        print("None")
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
+    else:
+        top_ten(sys.argv[1])
