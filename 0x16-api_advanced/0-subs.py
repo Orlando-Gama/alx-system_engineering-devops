@@ -1,26 +1,25 @@
 #!/usr/bin/python3
 """
-Queries the Reddit API and returns the number of total subscribers for a given
-subreddit.
+Queries the Reddit API and returns the number of subscribers for a given subreddit.
 """
+
 import requests
 
-def top_ten(subreddit):
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
-    headers = {"User-Agent": "your_user_agent"}  # Reddit API requires a User-Agent header
+def number_of_subscribers(subreddit):
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    headers = {"User-Agent": "my_bot/1.0"}  # Replace with your user agent
 
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        data = response.json().get("data", {}).get("children", [])
+        data = response.json().get("data", {})
 
         if data:
-            for post in data:
-                print(post["data"]["title"])
+            return data.get("subscribers", 0)
         else:
-            print("No posts found in the subreddit.")
+            return 0
     else:
-        print("None")
+        return 0
 
 if __name__ == "__main__":
     import sys
@@ -28,4 +27,4 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Please pass an argument for the subreddit to search.")
     else:
-        top_ten(sys.argv[1])
+        print("{:d}".format(number_of_subscribers(sys.argv[1])))
