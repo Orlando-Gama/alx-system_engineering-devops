@@ -13,41 +13,56 @@ Timeline
 January 14, 2024, 7:00 PM: API Turbulence
 
 Users reported frequent timeouts while accessing advanced API features.
+
 7:15 PM: Initial Checks
 
 Ensured server health and validated the status of essential services.
+
 7:30 PM: Performance Analysis
 
 Observed degraded performance in API responses and identified a surge in request volume.
+
 8:00 PM: Connection Pool Red Alert
 
 Detected database connection pool reaching critical levels.
+
 8:15 PM: Emergency Scaling
 
 Initiated dynamic scaling to accommodate the increased API request load.
 January 15, 2024, 6:00 AM: Service Stability
 
-The dynamic scaling stabilized the service, but intermittent 500 errors persisted.
+The dynamic scaling stabilized the service, but intermittent 
+
+500 errors persisted.
+
 January 21, 2024, 8:00 AM: Deep Dive into Logs
 
-Investigated logs to identify the root cause of lingering 500 errors.
+Investigated logs to identify the root cause of lingering 
+
+500 errors.
+
 8:30 AM: Database Conundrum
 
 Uncovered database connection pool exhaustion as the primary culprit.
+
 9:00 AM: Resolution
 
 Implemented optimizations in the database queries to reduce connection pool stress.
 Root Cause and Resolution
 Root Cause:
-The surge in advanced API requests overwhelmed the database connection pool, leading to timeouts and 500 errors.
+The surge in advanced API requests overwhelmed the database connection pool, leading to timeouts and 
+
+500 errors.
 
 Resolution:
 
 Immediate Fix: Initiated dynamic scaling to alleviate the immediate load.
 Long-Term Solution:
+
 Optimized database queries to reduce connection pool stress.
 Implemented additional caching mechanisms to handle API request peaks.
 Corrective and Preventive Measures
+
 Advanced API Monitoring:
 
 Enhance monitoring for advanced API endpoints to proactively detect unusual traffic patterns.
