@@ -17,7 +17,6 @@ Host *
 #   ConnectTimeout 0
 #   StrictHostKeyChecking ask
 #   IdentityFile ~/.ssh/identity
-    IdentityFile ~/.ssh/school
 #   IdentityFile ~/.ssh/id_rsa
 #   IdentityFile ~/.ssh/id_dsa
 #   Port 22
